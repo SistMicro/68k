@@ -1,27 +1,27 @@
 *-----------------------------------------------------------
-* Title      : INPUT7SEG -  Toma un número escrito desde teclado apareciendo
-*                           dinámicamente por los visualizadores 7 segmentos 
+* Title      : INPUT7SEG -  Toma un nÃºmero escrito desde teclado apareciendo
+*                           dinÃ¡micamente por los visualizadores 7 segmentos 
 *                           y devolviendo el valor del mismo en D1 calculado
 *                           mediante algoritmo de Horner
 * Written by : Fulgencio
 * Date       :
 * Description:
 *-----------------------------------------------------------
-SEG EQU $E0000E     * último display 7SEG
-
+SEG EQU $E0000E     * Ãºltimo display 7SEG
+ENTER EQU $0D
     ORG    $1000
 START
     
-    CLR.L SEG-2     *Así en tamaño .L los borra de 2 en 2
+    CLR.L SEG-2     *AsÃ­ en tamaÃ±o .L los borra de 2 en 2
     CLR.L SEG-6
     CLR.L SEG-10
     CLR.L SEG-14
 
     JSR INPUT7SEG
     
-***** Comprobación   
+***** ComprobaciÃ³n   
     JSR NEWLINE
-    MOVE.L #3,D0    *Prueba de adquisición correcta del número (unsigned)
+    MOVE.L #3,D0    *Prueba de adquisiciÃ³n correcta del nÃºmero (unsigned)
     TRAP #15
     SIMHALT
     
@@ -33,8 +33,8 @@ INPUT7SEG
 **** Constantes y variables
     CLR.L D2        *D2 para sumar cifras con sus pesos
     MOVE.L #TABLA,A0
-    MOVE.L #SEG,A1  *A1 apunta al dígito usado más significativo
-    MOVE.L A1,A2    *A2 se usa para recorrer y desplazar los dígitos en 7 segmentos
+    MOVE.L #SEG,A1  *A1 apunta al dÃ­gito usado mÃ¡s significativo
+    MOVE.L A1,A2    *A2 se usa para recorrer y desplazar los dÃ­gitos en 7 segmentos
 
 **** Llamadas auxiliares   
     JSR ECHOOFF
@@ -42,23 +42,23 @@ INPUT7SEG
 OTRO    
     MOVE.L #5,D0
     TRAP #15
-    CMP.B #$0D,D1
+    CMP.B #ENTER,D1
     BEQ FULL        *Termina con ENTER
     CMP.B #'9',D1
     BHI OTRO
     CMP.B #'0',D1
     BCS OTRO
     MOVE.L #6,D0
-    TRAP #15        *Generamos el eco pero solo cuando sean cifras numéricas
+    TRAP #15        *Generamos el eco pero solo cuando sean cifras numÃ©ricas
    
-    SUB.L #2,A1     *Se va a ocupar un nuevo digito más significativo. Los dígitos van en direcciones pares
+    SUB.L #2,A1     *Se va a ocupar un nuevo digito mÃ¡s significativo. Los dÃ­gitos van en direcciones pares
     MOVE.L A1,A2
     
 BUCDESP    
     CMP.L #SEG,A2   *Si ha llegado al final
     BEQ FINDESPL
-    MOVE.B 2(A2),(A2)   *Desplaza dígito hacia la izquierda
-    ADD.L #2,A2         *Apunta al dígito de la derecha
+    MOVE.B 2(A2),(A2)   *Desplaza dÃ­gito hacia la izquierda
+    ADD.L #2,A2         *Apunta al dÃ­gito de la derecha
     JMP BUCDESP
     
 FINDESPL    
@@ -71,7 +71,7 @@ MULT_D2X10
    LSL.L #3,D3     *3 desplazamientos es multiplicar x8
    ADD.L D2,D2     *Multiplica x2
    ADD.L D3,D2     *x8+x2 = x10
-   ADD.L D1,D2     *Añade la nueva cifra
+   ADD.L D1,D2     *AÃ±ade la nueva cifra
 *******
 
 
@@ -79,7 +79,7 @@ MULT_D2X10
 *    CMP.L #$10000,D2    
 *    BHI DOSWORDS    *SI sobrepasa .W hay que dividir en 2 .W
 *    MULU #10,D2     *MULU es .W x .W = .L   
-*    ADD.L D1,D2     *Añade la nueva cifra con peso 1
+*    ADD.L D1,D2     *AÃ±ade la nueva cifra con peso 1
 *    JMP FINHORNER
 *    
 *DOSWORDS
@@ -92,8 +92,8 @@ MULT_D2X10
 *    MULU #10,D2
 *    MULU #10,D3   *
 *    SWAP D3         *Recuperamos su peso original subiendolo a palabra alta
-*    ADD.L D3,D2     *Fusionamos contribución de ambas multiplicaciones sumando los resultados
-*    ADD.L D1,D2     *Añadimos la nueva cifra
+*    ADD.L D3,D2     *Fusionamos contribuciÃ³n de ambas multiplicaciones sumando los resultados
+*    ADD.L D1,D2     *AÃ±adimos la nueva cifra
 *FINHORNER
 **********   
 
@@ -141,9 +141,3 @@ TABLA    *    %HGFEDCBA
         DC.B  %01101111  DIGITO 9
 APAGA   DC.B  %00000000  APAGADO
     END    START
-
-
-*~Font name~Courier New~
-*~Font size~10~
-*~Tab type~1~
-*~Tab size~4~
