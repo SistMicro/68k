@@ -75,8 +75,8 @@ PINTAMURO   *Pinta un cuadrado de muro en X,Y indicado por D1 y D2
 ***********SUB PINTAMOZO
 PINTAMOZO
     MOVEM.L D0-D4,-(A7)
-    ADD.L #SIZE/4,D1         *mitad tamaño que el muro
-    *ADD.L #SIZE/4,D2        *quitamos 1/4 de cada lado
+    ADD.L #SIZE/4,D1        *mitad tamaño que el muro
+    ADD.L #SIZE/4,D2        *quitamos 1/4 de cada lado
     MOVE.L D1,D3
     MOVE.L D2,D4
     ADD.L #SIZE/2,D3
@@ -107,15 +107,10 @@ ROJO
 * Put variables and constants here
 
 MAPA1   DC.B '###### ',0  *# BORDE
-        DC.B '#    ##',0  *@ PERSONAJE
+        DC.B '#@   ##',0  *@ PERSONAJE
         DC.B '# $$  #',0  *$ CAJAS
-        DC.B '# #+ .#',0  *. DESTINO
+        DC.B '# #  .#',0  *. DESTINO
         DC.B '#     #',0
         DC.B '#######',0,0
 
-    END    START        ; last line of source
-
-*~Font name~Courier New~
-*~Font size~12~
-*~Tab type~1~
-*~Tab size~4~
+    END    START
