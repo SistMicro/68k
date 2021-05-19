@@ -1,5 +1,5 @@
 *-----------------------------------------------------------
-* Title      : Mapa Gr·fico Sokoban (solo muros y personaje)
+* Title      : Mapa Gr√°fico Sokoban (solo muros y personaje)
 * Written by : Fulgencio
 * Date       : 05/2021
 * Description:
@@ -43,7 +43,7 @@ NOPERS1
     JSR ROJO
     JSR PINTAMOZO
 NOPERS2
-    *Aqui se pueden comprobar las dem·s cosas
+    *Aqui se pueden comprobar las dem√°s cosas
     
     ADD.L #SIZE,D1  *Avanzamos coordenada X
     JMP BUCLE
@@ -75,13 +75,13 @@ PINTAMURO   *Pinta un cuadrado de muro en X,Y indicado por D1 y D2
 ***********SUB PINTAMOZO
 PINTAMOZO
     MOVEM.L D0-D4,-(A7)
-    ADD.L #SIZE/4,D1         *mitad tamaÒo que el muro
+    ADD.L #SIZE/4,D1         *mitad tama√±o que el muro
     *ADD.L #SIZE/4,D2        *quitamos 1/4 de cada lado
     MOVE.L D1,D3
     MOVE.L D2,D4
     ADD.L #SIZE/2,D3
     ADD.L #SIZE/2,D4
-    MOVE.L #88,D0       *cÌrculo
+    MOVE.L #88,D0       *c√≠rculo
     TRAP #15
     MOVEM.L (A7)+,D0-D4
     RTS
