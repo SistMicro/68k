@@ -27,7 +27,7 @@ START
 
 
 TO7SEG
-    MOVEM.L A0-A1/D1-D2,-(A7)
+    MOVEM.L A0-A1/D0-D2,-(A7)
 ***** Contantes
     MOVE.L #TABLA,A0    * Tabla de conversión 7 segmentos
     MOVE.L #SEG,A1      * A1 apunta al display de más a la derecha (primero en llenar)
@@ -40,11 +40,13 @@ PASO1
     MOVE.W D1,D2        * Guardamos cociente (parte más significativa) en D2
     CLR.W D1            * y lo eliminamos de D1
     SWAP D1             * Cogemos solo el resto para descomponerlo en cifras
+    MOVE.L #4,D0        * Hay que sacar 4 dígitos aunque sean ceros
     JSR CIFRAS
     MOVE.L D2,D1        * Cogemos ahora el cociente (más significativo) y lo desocomponemos en cifras
 PASO2
+    CLR.L D0            * No hay dígitos mínimos en el PASO2
     JSR CIFRAS
-    MOVEM.L (A7)+,A0-A1/D1-D2
+    MOVEM.L (A7)+,A0-A1/D0-D2
     RTS
     
 
@@ -55,9 +57,15 @@ CIFRAS
     SUB.L #2,A1             * pasa al display anterior
     CMP.L #SEG-16,A1        * Si se acaban 
     BEQ OVER
+    TST.L D0
+    BEQ NOSUB
+    SUB.L #1,D0             * Cuenta atrás de dígitos a representar
+NOSUB    
     CLR.W D1                * elimino resto
     SWAP D1                 * devuelvo el cociente a la palabra baja
     BNE CIFRAS *Mientras cociente no llegue a 0
+    TST.L D0
+    BNE CIFRAS
 OVER
     RTS
 
